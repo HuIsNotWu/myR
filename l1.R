@@ -5,4 +5,4 @@ a+b
 a <- matrix(1:25,5,5)
 a
 
-
+mode(a)
