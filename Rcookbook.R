@@ -9,8 +9,6 @@ ls.str()
 
 rm(list=ls())
 
-c(1:10)
-
 x <- c(1:100)
 mean(x)
 median(x)
