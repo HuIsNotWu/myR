@@ -48,3 +48,6 @@ as.Date("2015/1/5")
 lst <- list(c1=2,c2=c("a","b","c"),c3=1:5)
 lst$c4 <- "hello world"
 lst["c3"]
+#列出相应目录下的文件名
+list.files("E:/01 工作/01 信审/201601/20160129/")
+system.file()
