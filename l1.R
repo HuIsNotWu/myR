@@ -7,3 +7,9 @@ dt = sqlFetch(conn, "报表数据") # read a sheet
 dt = sqlQuery(conn, "select * from [报表数据$]") # read a sheet (alternative SQL sintax)
 close(conn) # close the connection to the file
 head(dt)
+
+fdir <- "E:/01 工作/03 月报/01 风控月度分析/各月末数据/"
+lf <- list.files(fdir)
+fpath <- paste(fdir,lf[grep("16-1",lf)],sep = "")
+fpath
+conn <- odbcConnectExcel2007(fpath)
