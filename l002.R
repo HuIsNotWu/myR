@@ -14,9 +14,9 @@ getSheets(wb)
 # 选择工作表
 
 chooseSheet <- function(str,nameList){
-  for(i in 1:length(shtnames)){
-    if(iconv(shtnames[i],"utf-8")==str){
-      shtname=shtnames[i]
+  for(i in 1:length(nameList)){
+    if(iconv(nameList[i],"utf-8")==str){
+      shtname=nameList[i]
     }
   }
   shtname
@@ -74,7 +74,7 @@ setCellStyle(title_cell, title_cell_style);
 tmp = mapply(function(x, y) setCellStyle(cells[[x, y]], black_cell_style),
              ind[, 1] 3, ind[, 2] 5);
 # Save the workbook into a file
-saveWorkbook(wb, "test.xlsx");
+saveWorkbook(wb, "d:/test.xls");
 
-system.file("help","anindex",package = "xlsx")
-system.file("d:/","xls")
+# system.file("help","anindex",package = "xlsx")
+# system.file("d:/","xls")

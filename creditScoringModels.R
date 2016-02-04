@@ -1,5 +1,5 @@
 
-library(xlsx)
+# library(xlsx)
 library(openxlsx)
 df <- read.xlsx("E:\\01 工作\\06 数据整理\\20160121在账客户匹配数据.xlsx", 1,detectDates = T)
 # head(df,5)
