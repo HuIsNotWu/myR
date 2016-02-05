@@ -14,4 +14,3 @@ fpath <- paste(fdir,lf[grep("16-1",lf)],sep = "")
 fpath
 conn <- odbcConnectExcel2007(fpath)
 
-# rm(list = ls())
