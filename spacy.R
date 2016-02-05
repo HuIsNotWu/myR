@@ -17,7 +17,7 @@ library(curl)
 #   curl_download(ht_li[i],str_c("d:/documents/",i,".jpg"))
 # }
 
-ptm <- proc.time()
+# ptm <- proc.time()
 n <- 0
 url_li <- vector()
 while(n*20<1720){
@@ -29,7 +29,7 @@ while(n*20<1720){
   print(n)
 }
 url_li <- url_li[grep("ShowNews",url_li)]
-proc.time() - ptm
+# proc.time() - ptm
 
 removeSpaceInListElement <- function(list){
   for(i in 1:length(list)){
@@ -55,4 +55,4 @@ for(i in 1:length(url_li)){
 }
 list <- removeSpaceInListElement(list)
 
-write.csv(as.data.frame(list),"d:/华南西部区现货报价_2.csv",row.names = F)
+write.csv(as.data.frame(list),"d:/华南西部区现货报价_new.csv",row.names = F)
