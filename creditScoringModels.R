@@ -70,7 +70,7 @@ options(digits=5)
 
 # 
 # nrow(df) #行数
-ncol(df);#列数
+# ncol(df);#列数
 # dim(df)
 # # library(xlsx)
 # library(openxlsx)

@@ -69,3 +69,21 @@ names(study) <- c("wei","hei","gen")
 study[["w"]]
 
 unstack(data.frame(a =c("x","y","y","z","x"),b=c(1,2,3,4,5)),b~a)
+
+
+rm(list=ls())
+path = 'J:/lab/EX29 --在R语言中进行文件（夹）操作'
+setwd(path)
+cat("file A\n", file="A") #创建一个文件A，文件内容是'file A','\n'表示换行，这是一个很好的习惯
+cat("file B\n", file="B")  #创建一个文件B
+file.append("A", "B")  #将文件B的内容附到A内容的后面，注意没有空行
+file.create("A")  #创建一个文件A, 注意会覆盖原来的文件
+file.append("A", rep("B", 10)) #将文件B的内容复制10便，并先后附到文件A内容后
+file.show("A")  #新开工作窗口显示文件A的内容
+file.copy("A", "C") #复制文件A保存为C文件，同一个文件夹
+dir.create("tmp")  #创建名为tmp的文件夹
+file.copy(c("A", "B"), "tmp") #将文件夹拷贝到tmp文件夹中
+list.files("tmp")  #查看文件夹tmp中的文件名
+unlink("tmp", recursive=F) #如果文件夹tmp为空，删除文件夹tmp
+unlink("tmp", recursive=TRUE) #删除文件夹tmp，如果其中有文件一并删除
+file.remove("A", "B", "C")  #移除三个文件
