@@ -1,9 +1,7 @@
 
-require(RODBC)
 library(openxlsx)
-df <- read.xlsx("C:\\Users\\Administrator\\Desktop\\各字段逾期20160221.xlsx", 2,detectDates = T)
+df <- read.xlsx("C:\\Users\\Administrator\\Desktop\\testdata.xlsx", 2,detectDates = T)
 
-# dfdup[,10]<- NULL
 dfscores <- list()
 
 tmp <- df$性别
@@ -182,6 +180,16 @@ tmp[t>60]=10
 tmp[is.na(t)]=5
 dfscores$最早一张贷记卡开户距离申请月月数 <- as.numeric(tmp)
 
+tmp <- t <-  df$人行贷款次数
+tmp[t==0]=6
+tmp[t==1]=10
+tmp[t==2]=10
+tmp[t>2 & t <=4]=8
+tmp[t>4 & t <=10]=9
+tmp[t>10 ]=7
+tmp[is.na(t)]=5
+dfscores$人行贷款次数 <- as.numeric(tmp)
+
 tmp <- t <-  df$负债率
 tmp[t==0]=10
 tmp[t>0 & t <=0.1]=9
@@ -197,8 +205,8 @@ names(dfscores)
 # head(as.data.frame(dfscores))
 
 attach(dfscores)
-score <- 3*gender+
-  5*age+
+score <- 5*gender+
+  3*age+
   3*婚姻+
   3*学历+
   2*岗位类型+
@@ -209,20 +217,21 @@ score <- 3*gender+
   3*按揭情况+
   3*车辆情况+
   
-  5*发薪方式+
-  5*核实收入+
+  6*发薪方式+
+  4*核实收入+
   
-  5*信用卡负债+
-  5*信用贷款负债+
-  10*人行近3个月查询次数+
-  10*人行房贷总金额+
-  10*人行单张信用卡最大额度+
-  5*人行正常状态信用卡张数+
-  15*人行近12个月的逾期次数+
-  10*人行近3个月的逾期次数+
-  5*最早一张贷记卡开户距离申请月月数+
-  15*负债率
-  
+  3*信用卡负债+
+  3*信用贷款负债+
+  4*人行近3个月查询次数+
+  1*人行房贷总金额+
+  2*人行单张信用卡最大额度+
+  1*人行正常状态信用卡张数+
+  3*人行近12个月的逾期次数+
+  6*人行近3个月的逾期次数+
+  1*最早一张贷记卡开户距离申请月月数+
+  1*人行贷款次数+
+  5*负债率
+
 detach(dfscores)
 dfscores$score <- score
 
@@ -232,27 +241,3 @@ if(file.exists(fname)) {
   file.remove(fname)
 }
 write.csv(as.data.frame(dfscores),fname)
-
-# ans=glm(state~性别+年龄段+负债率,family=binomial(link='logit'),data=df)
-# summary(ans)
-
-# df$state[df$逾期天数>15] <- 1
-# df$state[df$逾期天数<=15] <- 0
-# df$state[is.na(df$逾期天数)] <- 0
-# df$state
-# write.csv(df,"d:/documents/creditScoreData.csv")
-
-# 
-# conn = odbcConnectExcel("E:/01 工作/01 信审/201601/20160129/信贷审核登记表2016-1-29.xls") # open a connection to the Excel file
-# sqlTables(conn)$TABLE_NAME # show all sheets
-# dt = sqlFetch(conn, "报表数据") # read a sheet
-# dt = sqlQuery(conn, "select * from [报表数据$]") # read a sheet (alternative SQL sintax)
-# close(conn) # close the connection to the file
-# head(dt)
-# 
-# fdir <- "E:/01 工作/03 月报/01 风控月度分析/各月末数据/"
-# lf <- list.files(fdir)
-# fpath <- paste(fdir,lf[grep("16-1",lf)],sep = "")
-# fpath
-# conn <- odbcConnectExcel2007(fpath)
-

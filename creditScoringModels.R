@@ -58,7 +58,7 @@ creditCard[creditCard>10]=6
 
 creditCard
 
-if (file.exists("d:/creditCard.csv")) {
+if(file.exists("d:/creditCard.csv")) {
   file.remove("d:/creditCard.csv")
 }
 write.csv(creditCard,"d:/creditCard.csv")
