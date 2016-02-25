@@ -1,7 +1,7 @@
 
 library(openxlsx)
 df <- read.xlsx("C:\\Users\\Administrator\\Desktop\\testdata.xlsx", 2,detectDates = T)
-
+# df <- srcdf
 dfscores <- list()
 
 tmp <- df$性别
@@ -11,7 +11,8 @@ dfscores$gender <- as.numeric(tmp)
 
 tmp <- df$年龄
 tmp[tmp <25 ]=2
-tmp[tmp >=25 & tmp < 35]=7
+tmp[tmp >=25 & tmp < 30]=7
+tmp[tmp >=30 & tmp < 35]=7
 tmp[tmp >=35 & tmp < 40]=9
 tmp[tmp >=40 & tmp < 45]=10
 tmp[tmp >=45 & tmp < 50]=7
@@ -113,19 +114,19 @@ tmp[tmp>10000]=2
 tmp[is.na(tmp)]=5
 dfscores$信用贷款负债 <- as.numeric(tmp)
 
-tmp <- df$人行近3个月查询次数
+tmp <- t <- df$人行近3个月查询次数
 tmp[tmp>=7]=7
 tmp <- 10-tmp
-tmp[is.na(tmp)]=5
-dfscores$人行近3个月查询次数 <- tmp
 # tmp[tmp==0]=10
 # tmp[tmp==1]=9
 # tmp[tmp==2]=8
-# tmp[tmp==3]=7
-# tmp[tmp==4]=6
-# tmp[tmp==5]=5
-# tmp[tmp==6]=4
-# tmp[tmp>=7]=3
+# tmp[tmp==3]=6
+# tmp[tmp==4]=5
+# tmp[tmp==5]=4
+# tmp[tmp==6]=3
+# tmp[tmp>=7]=2
+tmp[is.na(tmp)]=5
+dfscores$人行近3个月查询次数 <- tmp
 
 tmp <- t <- df$人行房贷总金额
 tmp[t==0]=10
@@ -154,11 +155,11 @@ tmp[t>5]=4
 tmp[is.na(t)]=5
 dfscores$人行正常状态信用卡张数 <- as.numeric(tmp)
 
-tmp <- df$人行近12个月的逾期次数
-tmp[tmp>4]=4
-tmp[tmp %in% c(2,3)]=7
-tmp[tmp==1]=8
-tmp[tmp==0]=10
+tmp <- t <- df$人行近12个月的逾期次数
+tmp[t==0]=10
+tmp[t==1]=8
+tmp[t %in% c(2,3)]=7
+tmp[t>=4]=2
 tmp[is.na(tmp)]=5
 dfscores$人行近12个月的逾期次数 <- as.numeric(tmp)
 
@@ -205,33 +206,57 @@ names(dfscores)
 # head(as.data.frame(dfscores))
 
 attach(dfscores)
-score <- 5*gender+
-  3*age+
-  3*婚姻+
-  3*学历+
-  2*岗位类型+
-  2*dfscores$户籍是否为居住地本地+
-  2*客户类型+
+score <- 1*gender+
+  6*age+
+  23*婚姻+
+  20*学历+
+  20*岗位类型+
+  27*dfscores$户籍是否为居住地本地+
+  34*客户类型+
   
-  4*房产情况+
-  3*按揭情况+
-  3*车辆情况+
+  34*房产情况+
+  4*按揭情况+
+  55*车辆情况+
   
-  6*发薪方式+
-  4*核实收入+
+  27*发薪方式+
+  28*核实收入+
   
-  3*信用卡负债+
-  3*信用贷款负债+
-  4*人行近3个月查询次数+
-  1*人行房贷总金额+
-  2*人行单张信用卡最大额度+
-  1*人行正常状态信用卡张数+
-  3*人行近12个月的逾期次数+
-  6*人行近3个月的逾期次数+
-  1*最早一张贷记卡开户距离申请月月数+
-  1*人行贷款次数+
-  5*负债率
-
+  61*信用卡负债+
+  60*信用贷款负债+
+  79*人行近3个月查询次数+
+  4*人行房贷总金额+
+  4*人行单张信用卡最大额度+
+  3*人行正常状态信用卡张数+
+  1*人行近12个月的逾期次数+
+  2*人行近3个月的逾期次数+
+  3*最早一张贷记卡开户距离申请月月数+
+  5*人行贷款次数+
+  25*负债率
+# 11*age+
+#   11*婚姻+
+#   71*学历+
+#   72*岗位类型+
+#   41*dfscores$户籍是否为居住地本地+
+#   83*客户类型+
+#   
+#   44*房产情况+
+#   18*按揭情况+
+#   6*车辆情况+
+#   
+#   6*发薪方式+
+#   11*核实收入+
+#   
+#   41*信用卡负债+
+#   77*信用贷款负债+
+#   101*人行近3个月查询次数+
+#   21*人行房贷总金额+
+#   21*人行单张信用卡最大额度+
+#   5*人行正常状态信用卡张数+
+#   15*人行近12个月的逾期次数+
+#   6*人行近3个月的逾期次数+
+#   31*最早一张贷记卡开户距离申请月月数+
+#   2*人行贷款次数+
+#   19*负债率
 detach(dfscores)
 dfscores$score <- score
 
@@ -241,3 +266,14 @@ if(file.exists(fname)) {
   file.remove(fname)
 }
 write.csv(as.data.frame(dfscores),fname)
+
+# library(openxlsx)
+# srccdf <- read.xlsx("C:\\Users\\Administrator\\Desktop\\各字段逾期20160221.xlsx", 2,detectDates = T)
+# 
+# sampledf <- srccdf[srccdf$状态=="M1+",]
+# nrow(sampledf)
+# sampledf <- rbind(sampledf,srccdf[srccdf$状态=="M1",])
+# nrow(sampledf)
+# sampledf <- rbind(sampledf,srccdf[as.numeric( sample(row.names(srccdf[srccdf$状态=="正常",]),1000)),])
+# nrow(sampledf)
+# write.csv(sampledf,"d:/sampledata.csv")
