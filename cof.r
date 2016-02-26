@@ -1,7 +1,8 @@
 
 # library(openxlsx)
-# df <- read.xlsx("C:\\Users\\Administrator\\Desktop\\testdata.xlsx", 2,detectDates = T)
+# df <- read.xlsx("C:\\Users\\胡伴山\\Desktop\\testdata.xlsx", 2,detectDates = T)
 # df <- srcdf
+
 dfscores <- list()
 
 tmp <- df$性别
@@ -231,7 +232,8 @@ names(dfscores)
 # head(as.data.frame(dfscores))
 
 attach(dfscores)
-score <- 30*gender+
+score <-
+  30*dfscores$gender+
   5*age+
   20*婚姻+
   15*学历+
@@ -264,12 +266,27 @@ score <- 30*gender+
 detach(dfscores)
 dfscores$score <- score
 
+out <- list()
+out$state <- df$状态
+out$score <- score
+out <- as.data.frame(out)
+out <- out[order(score),]
+out$row <- 1:nrow(out)
+out$deli <- cumsum( out$state=="M1+")
+out$prow <- out$row/max(out$row)
+out$pdeli <- out$deli/max(out$deli)
+out[ceiling(max(out$row)*c(0.1,0.3,0.5,0.7,0.9,1)),]
+
 fname <- "d:/scores.csv"
 
 if(file.exists(fname)) {
   file.remove(fname)
 }
 write.csv(as.data.frame(dfscores),fname)
+
+rm(score)
+
+# srcdf <- df
 
 # library(openxlsx)
 # srccdf <- read.xlsx("C:\\Users\\Administrator\\Desktop\\各字段逾期20160221.xlsx", 2,detectDates = T)
@@ -281,7 +298,6 @@ write.csv(as.data.frame(dfscores),fname)
 # sampledf <- rbind(sampledf,srccdf[as.numeric( sample(row.names(srccdf[srccdf$状态=="正常",]),1000)),])
 # nrow(sampledf)
 # write.csv(sampledf,"d:/sampledata.csv")
-
 
 # 11*age+
 #   11*婚姻+
@@ -307,4 +323,5 @@ write.csv(as.data.frame(dfscores),fname)
 #   6*人行近3个月的逾期次数+
 #   31*最早一张贷记卡开户距离申请月月数+
 #   2*人行贷款次数+
+#   30*人行贷款次数+
 #   19*负债率
