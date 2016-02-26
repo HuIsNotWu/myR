@@ -172,6 +172,16 @@ tmp[t>=3]=3
 tmp[is.na(t)]=5
 dfscores$人行近3个月的逾期次数 <- as.numeric(tmp)
 
+tmp <- t <-  df$贷记卡最高使用率
+tmp[t==0]=9
+tmp[t>0 & t <=0.25]=10
+tmp[t>0.25 & t <=0.5]=8
+tmp[t>0.5 & t <=0.8]=8
+tmp[t>0.8 & t <=1]=7
+tmp[t>1]=2
+tmp[is.na(t)]=5
+dfscores$贷记卡最高使用率 <- as.numeric(tmp)
+
 tmp <- t <-  df$最早一张贷记卡开户距离申请月月数
 tmp[t==0]=2
 tmp[t>0 & t <=12]=4
