@@ -11,21 +11,21 @@ tmp[tmp %in% "女"]=10
 dfscores$gender <- as.numeric(tmp)
 
 tmp <- df$年龄
-tmp[tmp <25 ]=2
+tmp[tmp <25 ]=1
 tmp[tmp >=25 & tmp < 30]=7
 tmp[tmp >=30 & tmp < 35]=7
 tmp[tmp >=35 & tmp < 40]=9
 tmp[tmp >=40 & tmp < 45]=10
 tmp[tmp >=45 & tmp < 50]=7
-tmp[tmp >=50 & tmp < 55]=4
-tmp[tmp >=55]=5
+tmp[tmp >=50 & tmp < 55]=3
+tmp[tmp >=55]=3
 dfscores$age <- as.numeric(tmp)
 
 tmp <- df$婚姻
-tmp[tmp !="已婚" | tmp !="未婚"]=2
+tmp[tmp !="已婚" | tmp !="未婚"]=1
 tmp[tmp =="已婚"]=10
-tmp[tmp =="未婚"]=3
-tmp[is.na(tmp)]=5
+tmp[tmp =="未婚"]=2
+tmp[is.na(tmp)]=4
 dfscores$婚姻 <- as.numeric(tmp)
 
 tmp <- df$学历
@@ -34,59 +34,59 @@ tmp[tmp =="本科"]=9
 tmp[tmp =="中专"]=6
 tmp[tmp =="专科"]=4
 tmp[tmp =="高中及以下"]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$学历 <- as.numeric(tmp)
 
 tmp <- df$岗位类型
 tmp[tmp =="高层管理" | tmp =="中层管理"]=10
 tmp[tmp =="企业法人"]=8
 tmp[tmp =="基础管理" | tmp =="一般员工"]=6
-tmp[tmp =="其他"]=2
-tmp[is.na(tmp)]=5
+tmp[tmp =="其他"]=1
+tmp[is.na(tmp)]=4
 dfscores$岗位类型 <- as.numeric(tmp)
 
 tmp <- df$户籍是否为居住地本地
 tmp[tmp =="是"]=10
 tmp[tmp =="否"]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$户籍是否为居住地本地 <- as.numeric(tmp)
 
 tmp <- df$客户类型
 tmp[tmp !="受薪" & tmp !="私营业主"]=2
 tmp[tmp =="受薪"]=4
 tmp[tmp =="私营业主"]=10
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$客户类型 <- as.numeric(tmp)
 
 tmp <- t <- df$客户类型
 tmp[t =="私营业主"]=10
 tmp[t !="私营业主"]=2
-tmp[is.na(t)]=5
+tmp[is.na(t)]=4
 dfscores$是否私营业主 <- as.numeric(tmp)
 
 tmp <- df$房产情况
 tmp[tmp =="有"]=6
 tmp[tmp =="无"]=4
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$房产情况 <- as.numeric(tmp)
 
 tmp <- df$按揭情况
 tmp[tmp =="有"]=10
 tmp[tmp =="无"]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$按揭情况 <- as.numeric(tmp)
 
 tmp <- df$车辆情况
 tmp[tmp =="有"]=10
 tmp[tmp =="无"]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$车辆情况 <- as.numeric(tmp)
 
 tmp <- df$发薪方式
 tmp[tmp =="网银"]=10
 tmp[tmp =="网银+现金"]=6
 tmp[tmp =="现金"]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$发薪方式 <- as.numeric(tmp)
 
 tmp <- df$核实收入
@@ -98,7 +98,7 @@ tmp[tmp >=20000 & tmp < 30000]=10
 tmp[tmp >=30000 & tmp < 50000]=9
 tmp[tmp >=50000 & tmp < 100000]=8
 tmp[tmp >=100000]=8
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$核实收入 <- as.numeric(tmp)
 
 tmp <- df$信用卡负债
@@ -108,7 +108,7 @@ tmp[tmp>500 & tmp<=1000]=10
 tmp[tmp>1000 & tmp<=2000]=9
 tmp[tmp>2000 & tmp<=5000]=6
 tmp[tmp>5000]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$信用卡负债 <- as.numeric(tmp)
 
 t <- tmp <- df$信用贷款负债
@@ -118,7 +118,7 @@ tmp[tmp>1500 & tmp<=3000]=7
 tmp[tmp>3000 & tmp<=5000]=6
 tmp[tmp>5000 & tmp<=10000]=4
 tmp[tmp>10000]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$信用贷款负债 <- as.numeric(tmp)
 
 tmp <- t <- df$人行近3个月查询次数
@@ -132,7 +132,7 @@ tmp <- 10-tmp
 # tmp[tmp==5]=4
 # tmp[tmp==6]=3
 # tmp[tmp>=7]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$人行近3个月查询次数 <- tmp
 
 tmp <- t <- df$人行房贷总金额
@@ -140,7 +140,7 @@ tmp[t==0]=10
 tmp[t>0 & t<=100000]=8
 tmp[t>100000 & t<=300000]=6
 tmp[t>300000]=4
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$人行房贷总金额 <- as.numeric(tmp)
 
 tmp <- t <- df$人行单张信用卡最大额度
@@ -150,7 +150,7 @@ tmp[t>5000 & t<=10000]=6
 tmp[t>10000 & t<=20000]=8
 tmp[t>20000 & t<=50000]=10
 tmp[t>50000]=8
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$人行单张信用卡最大额度 <- as.numeric(tmp)
 
 tmp <- t <-  df$人行正常状态信用卡张数
@@ -158,7 +158,7 @@ tmp[t==0]=2
 tmp[t==1]=9
 tmp[t==2]=8
 tmp[t %in% c(3,4)]=10
-tmp[t>5]=4
+tmp[t>=5]=4
 tmp[is.na(t)]=5
 dfscores$人行正常状态信用卡张数 <- as.numeric(tmp)
 
@@ -167,7 +167,7 @@ tmp[t==0]=10
 tmp[t==1]=8
 tmp[t %in% c(2,3)]=6
 tmp[t>=4]=2
-tmp[is.na(tmp)]=5
+tmp[is.na(tmp)]=4
 dfscores$人行近12个月的逾期次数 <- as.numeric(tmp)
 
 tmp <- t <-  df$人行近3个月的逾期次数
@@ -249,7 +249,7 @@ score <-
   40*核实收入+
   
   55*信用卡负债+
-  55*信用贷款负债+
+  50*信用贷款负债+
   100*人行近3个月查询次数+
   20*人行房贷总金额+
   60*人行单张信用卡最大额度+
@@ -258,7 +258,7 @@ score <-
   30*人行近3个月的逾期次数+
   70*贷记卡最高使用率+
   20*最早一张贷记卡开户距离申请月月数+
-  30*人行贷款次数+
+  25*人行贷款次数+
   50*负债率+
   
   10*近3逾占12比 
@@ -272,19 +272,18 @@ out$score <- score
 out <- as.data.frame(out)
 out <- out[order(score),]
 out$row <- 1:nrow(out)
-out$deli <- cumsum( out$state=="M1+")
+out$deli <- cumsum(out$state=="M1+")
 out$prow <- out$row/max(out$row)
 out$pdeli <- out$deli/max(out$deli)
-out[ceiling(max(out$row)*c(0.1,0.3,0.5,0.7,0.9,1)),]
+out <- out[ceiling(max(out$row)*c(0.1,0.3,0.5,0.7,0.9,1)),]
+out
 
-fname <- "d:/scores.csv"
-
-if(file.exists(fname)) {
-  file.remove(fname)
-}
-write.csv(as.data.frame(dfscores),fname)
-
-rm(score)
+# fname <- "d:/scores.csv"
+# 
+# if(file.exists(fname)) {
+#   file.remove(fname)
+# }
+# write.csv(as.data.frame(dfscores),fname)
 
 # srcdf <- df
 
