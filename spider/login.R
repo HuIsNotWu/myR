@@ -1,0 +1,8 @@
+Sys.setlocale(category = "LC_ALL", locale ="chs")
+# install.packages("RCurl")
+# install.packages("XML")
+# install.packages("stringr")
+library(RCurl)
+library(XML)
+library(stringr)
+library(curl)
