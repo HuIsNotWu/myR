@@ -15,7 +15,7 @@ tmp <- df$年龄
 tmp[tmp <25 ]=1
 tmp[tmp >=25 & tmp < 30]=4
 tmp[tmp >=30 & tmp < 35]=7
-tmp[tmp >=35 & tmp < 40]=8
+tmp[tmp >=35 & tmp < 40]=9
 tmp[tmp >=40 & tmp < 45]=10
 tmp[tmp >=45 & tmp < 50]=8
 tmp[tmp >=50 & tmp < 55]=5
@@ -114,17 +114,6 @@ tmp[is.na(tmp)]=ifelse(m<5,m,5)
 dfscores$核实收入 <- as.numeric(tmp)
 
 
-tmp <- df$信用卡负债
-tmp[tmp==0]=2
-tmp[tmp>0 & tmp<=500]=4
-tmp[tmp>500 & tmp<=1000]=10
-tmp[tmp>1000 & tmp<=2000]=9
-tmp[tmp>2000 & tmp<=5000]=6
-tmp[tmp>5000]=2
-m <- round(mean(as.numeric(tmp),na.rm = T))
-tmp[is.na(tmp)]=ifelse(m<5,m,5)
-dfscores$信用卡负债 <- as.numeric(tmp)
-
 t <- tmp <- df$信用贷款负债
 tmp[tmp==0]=10
 tmp[tmp>0 & tmp<=1500]=9
@@ -137,76 +126,90 @@ tmp[is.na(tmp)]=ifelse(m<5,m,5)
 dfscores$信用贷款负债 <- as.numeric(tmp)
 
 tmp <- t <- df$人行近3个月查询次数
-tmp[tmp>=8]=8
-tmp <- 10-tmp
-# tmp[tmp==0]=10
-# tmp[tmp==1]=9
-# tmp[tmp==2]=8
-# tmp[tmp==3]=6
-# tmp[tmp==4]=5
-# tmp[tmp==5]=4
-# tmp[tmp==6]=3
-# tmp[tmp>=7]=2
+tmp[t<=2]=10
+tmp[t>2 & t<=5]=5
+tmp[t>5 & t<=8]=2
+tmp[t>8]=0
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
 dfscores$人行近3个月查询次数 <- tmp
 
 tmp <- t <- df$人行房贷总金额
-tmp[t==0]=10
-tmp[t>0 & t<=100000]=8
-tmp[t>100000 & t<=200000]=6
-tmp[t>200000 & t<=500000]=4
-tmp[t>500000]=3
+tmp[t==0]=4
+tmp[t>0 & t<=100000]=6
+tmp[t>100000 & t<=300000]=8
+tmp[t>300000]=10
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
 dfscores$人行房贷总金额 <- as.numeric(tmp)
 
-tmp <- t <- df$人行单张信用卡最大额度
-tmp[t==0]=3
-tmp[t>0 & t<=5000]=5
-tmp[t>5000 & t<=10000]=6
-tmp[t>10000 & t<=20000]=8
-tmp[t>20000 & t<=50000]=10
-tmp[t>50000]=8
+tmp <- t <-  df$人行贷款次数
+tmp[t==0]=4
+tmp[t==1]=8
+tmp[t==2]=10
+tmp[t>2 & t <=4]=9
+tmp[t>4 & t <=10]=7
+tmp[t>10 ]=5
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
-dfscores$人行单张信用卡最大额度 <- as.numeric(tmp)
+dfscores$人行贷款次数 <- as.numeric(tmp)
+
+tmp <- t <-  df$外部负债率
+tmp[t==0]=10
+tmp[t>0 & t <=0.1]=8
+tmp[t>0.1 & t <=0.3]=6
+tmp[t>0.3 & t <=0.6]=5
+tmp[t>0.6 & t <=0.9]=7
+tmp[t>0.9 & t <=1.5]=5
+tmp[t>1.5]=1
+m <- round(mean(as.numeric(tmp),na.rm = T))
+tmp[is.na(tmp)]=ifelse(m<5,m,5)
+dfscores$外部负债率 <- as.numeric(tmp)
 
 tmp <- t <-  df$人行正常状态信用卡张数
-tmp[t==0]=2
+tmp[t==0]=0
 tmp[t==1]=9
 tmp[t==2]=8
 tmp[t %in% c(3,4)]=10
-tmp[t>=5]=4
+tmp[t>=5]=2
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
 dfscores$人行正常状态信用卡张数 <- as.numeric(tmp)
 
-tmp <- t <- df$人行近12个月的逾期次数
-tmp[t==0]=10
-tmp[t==1]=8
-tmp[t %in% c(2,3)]=6
-tmp[t>=4]=2
+tmp <- df$信用卡负债
+tmp[tmp==0]=1
+tmp[tmp>0 & tmp<=500]=3
+tmp[tmp>500 & tmp<=1000]=6
+tmp[tmp>1000 & tmp<=2000]=10
+tmp[tmp>2000 & tmp<=5000]=9
+tmp[tmp>5000 & tmp<=8000]=5
+tmp[tmp>8000]=2
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
-dfscores$人行近12个月的逾期次数 <- as.numeric(tmp)
+dfscores$信用卡负债 <- as.numeric(tmp)
 
-tmp <- t <-  df$人行近3个月的逾期次数
-tmp[t==0]=10
-tmp[t==1]=7
-tmp[t==2]=3
-tmp[t>=3]=1
+tmp <- t <- df$人行单张信用卡最大额度
+tmp[t==0]=3
+tmp[t>0 & t<5000]=5
+tmp[t>=5000 & t<10000]=6
+tmp[t>=10000 & t<20000]=8
+tmp[t>=20000 & t<50000]=10
+tmp[t>=50000 & t<100000]=8
+tmp[t>=100000]=10
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
-dfscores$人行近3个月的逾期次数 <- as.numeric(tmp)
+dfscores$人行单张信用卡最大额度 <- as.numeric(tmp)
 
-# tmp <- t <- df$人行近3个月的逾期次数/df$人行近12个月的逾期次数
-# tmp[t>0 & t<0.5]=1
-# tmp[t>=0.5 & t<1]=0
-# tmp[t>=1]=-2
-# m <- round(mean(as.numeric(tmp),na.rm = T))
-# tmp[is.na(t) | is.nan(t)] =ifelse(m<5,m,5)
-# dfscores$近3逾占12比 <- as.numeric(tmp)
+tmp <- t <- df$人行单张信用卡最大额度*0.65
+tmp[t==0]=0
+tmp[t>0 & t<5000]=2
+tmp[t>=5000 & t<10000]=6
+tmp[t>=10000 & t<20000]=8
+tmp[t>=20000 & t<50000]=9
+tmp[t>=50000]=10
+m <- round(mean(as.numeric(tmp),na.rm = T))
+tmp[is.na(tmp)]=ifelse(m<5,m,5)
+dfscores$信用卡平均额度 <- as.numeric(tmp)
 
 tmp <- t <-  df$贷记卡最高使用率
 tmp[t==0]=9
@@ -232,28 +235,31 @@ m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
 dfscores$最早一张贷记卡开户距离申请月月数 <- as.numeric(tmp)
 
-tmp <- t <-  df$人行贷款次数
-tmp[t==0]=6
-tmp[t==1]=9
-tmp[t==2]=10
-tmp[t>2 & t <=4]=8
-tmp[t>4 & t <=10]=9
-tmp[t>10 ]=7
-m <- round(mean(as.numeric(tmp),na.rm = T))
-tmp[is.na(tmp)]=ifelse(m<5,m,5)
-dfscores$人行贷款次数 <- as.numeric(tmp)
-
-tmp <- t <-  df$外部负债率
+tmp <- t <- df$人行近12个月的逾期次数
 tmp[t==0]=10
-tmp[t>0 & t <=0.1]=8
-tmp[t>0.1 & t <=0.3]=6
-tmp[t>0.3 & t <=0.6]=5
-tmp[t>0.6 & t <=0.9]=7
-tmp[t>0.9 & t <=2]=5
-tmp[t>2]=1
+tmp[t==1]=7
+tmp[t %in% c(2,3)]=5
+tmp[t>=4]=1
 m <- round(mean(as.numeric(tmp),na.rm = T))
 tmp[is.na(tmp)]=ifelse(m<5,m,5)
-dfscores$外部负债率 <- as.numeric(tmp)
+dfscores$人行近12个月的逾期次数 <- as.numeric(tmp)
+
+tmp <- t <-  df$人行近3个月的逾期次数
+tmp[t==0]=10
+tmp[t==1]=6
+tmp[t==2]=3
+tmp[t>=3]=1
+m <- round(mean(as.numeric(tmp),na.rm = T))
+tmp[is.na(tmp)]=ifelse(m<5,m,5)
+dfscores$人行近3个月的逾期次数 <- as.numeric(tmp)
+
+# tmp <- t <- df$人行近3个月的逾期次数/df$人行近12个月的逾期次数
+# tmp[t>0 & t<0.5]=1
+# tmp[t>=0.5 & t<1]=0
+# tmp[t>=1]=-2
+# m <- round(mean(as.numeric(tmp),na.rm = T))
+# tmp[is.na(t) | is.nan(t)] =ifelse(m<5,m,5)
+# dfscores$近3逾占12比 <- as.numeric(tmp)
 
 tmp <- t <- as.numeric(gsub("*个月","",df$车辆使用时间))
 tmp[t>0 & t<=3] =2
@@ -276,8 +282,8 @@ names(dfscores)
 
 attach(dfscores)
 score <-
-  30*dfscores$gender+
-  5*age+
+  25*dfscores$gender+
+  10*age+
   20*婚姻+
   15*学历+
   15*岗位类型+
@@ -286,26 +292,28 @@ score <-
   5*是否私营业主+
   
   10*房产情况+
-  5*按揭情况+
-  45*车辆情况+
+  15*按揭情况+
+  35*车辆情况+
   65*发薪方式+
   25*核实收入+
   
-  55*信用卡负债+
   55*信用贷款负债+
-  110*人行近3个月查询次数+
+  90*人行近3个月查询次数+
   20*人行房贷总金额+
-  60*人行单张信用卡最大额度+
-  30*人行正常状态信用卡张数+
-  80*人行近12个月的逾期次数+
-  30*人行近3个月的逾期次数+
-  70*贷记卡最高使用率+
-  25*最早一张贷记卡开户距离申请月月数+
   25*人行贷款次数+
   40*外部负债率+
+  30*人行正常状态信用卡张数+
+  55*信用卡负债+
+  50*人行单张信用卡最大额度+
+  30*信用卡平均额度+
+  60*贷记卡最高使用率+
+  25*最早一张贷记卡开户距离申请月月数+
   
-  50*车辆购买时长+
-  50*车龄
+  60*人行近12个月的逾期次数+
+  30*人行近3个月的逾期次数
+  
+#   50*车辆购买时长+
+#   50*车龄
 
 detach(dfscores)
 dfscores$score <- score
@@ -356,7 +364,7 @@ options(digits=5)
 # nrow(subdf)
 # subdf <- cbind(subdf,as.Date("2015/12/1")-subdf[,"本期还款日"]<=0)
 # head(subdf)
-# 
+
 # # write.csv(subdf,"d:/subdf.csv")
 # plot(c(1:10),c(1:10))
 # names(subdf)
@@ -364,10 +372,9 @@ options(digits=5)
 # subdf[,13] <- 
 # subset(subdf,subdf[,13]>4e+6)
 # nrow(subdf)
-# 
+
 # a <- c(1:10,NA,NA,NA,12:16)
 # a[a>8]
 # subset(a,a>8,na.rm=T)
 # subset(a,a>8)
 # subset(a,a>8,na.rm=F)
-
